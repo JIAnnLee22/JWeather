@@ -9,26 +9,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jiannlee22.jweather.JWeatherDestination
 import com.jiannlee22.jweather.R
+import com.jiannlee22.jweather.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(onNavToCityScreen: NavHostController) {
-    val city = "广州市 白云区"
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel.weatherNow()
     Column {
-        TopBar(city, onNavToCityScreen)
-        WeatherInfo(city)
+        TopBar(onNavToCityScreen)
+        WeatherInfo()
     }
 }
 
 @Composable
-private fun TopBar(city: String, onNavToCityScreen: NavHostController) {
+private fun TopBar(onNavToCityScreen: NavHostController) {
     Box(
         modifier = Modifier
             .wrapContentHeight()
@@ -43,27 +46,22 @@ private fun TopBar(city: String, onNavToCityScreen: NavHostController) {
                 contentDescription = "add city"
             )
         }
-        Text(
-            text = city,
-            modifier = Modifier.align(Alignment.Center),
-            textAlign = TextAlign.Center
-        )
     }
 }
 
 @Composable
-fun WeatherInfo(city: String) {
-    val weatherInfo = "晴天 33"
+fun WeatherInfo(homeViewModel: HomeViewModel = viewModel()) {
+    val now = homeViewModel.weatherNow?.now?.text
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = city,
+            text = "",
             fontSize = 34.sp,
         )
 
-        Text(text = weatherInfo)
+        Text(text = now ?: "")
     }
 }
 
