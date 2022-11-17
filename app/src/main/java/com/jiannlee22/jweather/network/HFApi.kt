@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val WEATHER_URL = "https://devapi.qweather.com/v7/weather/"
-const val KEY = "9348777783b84972959e0b451bedbc8b"
+const val KEY = ""
 
 object HFApi {
     private val weatherRetrofit by lazy {
